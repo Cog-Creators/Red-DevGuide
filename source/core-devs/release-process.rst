@@ -37,7 +37,25 @@ Types of releases
 Making a release
 ----------------
 
+As much as possible, the release steps are automated and guided by the **Release Helper** script,
+which is shipped with the repository at ``tools/release_helper.py``.
+
+To use the script, you will need to install the `GitHub CLI <https://cli.github.com>`__
+and authenticate with your GitHub account using the ``gh auth login`` command.
+
+The script can be started simply by running:
+
+.. prompt::
+
+   .venv/bin/python tools/release_helper.py
+
+which will ask you about the release type you want to make and then guide you through the process.
+
 #. Ensure there are no release blockers.
+
+   .. note::
+
+      These will be listed to you by the **Release Helper**.
 
    .. tab:: Hotfix release
 
@@ -50,6 +68,10 @@ Making a release
       (labelled as "Release Blocker" on the issue tracker) that need to be handled before the release.
 
 #. Check state of all open pull requests for this milestone.
+
+   .. note::
+
+      These will be listed to you by the **Release Helper**.
 
    .. tab:: Hotfix release
 
@@ -69,8 +91,11 @@ Making a release
 
       At this point, you should have an up-to-date milestone containing all PRs
       that are contained in this release. If you're not sure if all PRs are properly assigned,
-      you might find the ``=getunreleasedcommits MILESTONE_NAME`` bot command
-      in one of testing channels on Red server useful.
+      you might find **Release Helper**'s ``unreleased`` command (or its
+      "Show unreleased commits without a milestone" counter-part from the guided flow) helpful:
+
+      .. figure:: /_images/release-helper-changelog-unreleased.png
+         :target: /_images/release-helper-changelog-unreleased.png
 
    The changelog PR should always be merged into ``V3/develop``. You should remember to later
    cherry-pick/backport it to a proper branch if you're not making a release from ``V3/develop``.
@@ -85,12 +110,30 @@ Making a release
    .. tab:: Everything else
 
       - Add (or ask PR author to add) any missing entries based on the release's milestone.
+
+        You might find the **Release Helper**'s ``milestone`` command helpful here:
+
+        .. figure:: /_images/release-helper-changelog-milestone.png
+           :target: /_images/release-helper-changelog-milestone.png
+
       - Update the contributors list in the changelog using contributors list for the milestone
-        that you can generate using ``=getcontributors MILESTONE_NAME`` bot command
-        in one of testing channels on Red server.
+        that you can generate using **Release Helper**'s ``contributors`` command (or its
+        "Get contributor list formatted for the changelog" counter-part from the guided flow):
+
+        .. figure:: /_images/release-helper-changelog-contributor-list-standalone.png
+           :target: /_images/release-helper-changelog-contributor-list-standalone.png
+
+        .. figure:: /_images/release-helper-changelog-contributor-list.png
+           :target: /_images/release-helper-changelog-contributor-list.png
+
       - Merge the PR once it's ready.
 
 #. Run "Prepare Release" workflow.
+
+   .. note::
+
+      This can be triggered automatically with the **Release Helper**.
+      The below steps are an alternative way that doesn't require the use of that tool.
 
    Go to https://github.com/Cog-Creators/Red-DiscordBot/actions/workflows/prepare_release.yml
 
@@ -112,9 +155,18 @@ Making a release
 
 #. Merge the automatically created PRs.
 
+   .. note::
+
+      These will be listed to you by the **Release Helper**.
+
    Wait for "Prepare Release" workflow to finish and merge the PRs that it created.
 
 #. Create a short-lived release branch.
+
+   .. note::
+
+      This is a manual step - the **Release Helper** will pause at this step
+      for you to perform the necessary actions.
 
    .. tab:: Hotfix release
 
@@ -171,6 +223,10 @@ Making a release
 
 #. Write (not send!) an announcement for the new release.
 
+   .. note::
+
+      This and the following steps are not performed by the **Release Helper**.
+
    This is the announcement that you will later `post to Discord <publish-announcement>`.
 
    Remember to:
@@ -196,7 +252,7 @@ Making a release
 
             Full changelogs here: <https://docs.discord.red/en/stable/changelog_3_4_0.html#redbot-3-4-12-2021-06-17>
 
-#. Make a new release through `GitHub Releases <https://github.com/Cog-Creators/Red-DiscordBot/releases/new>`.
+#. Make a new release through `GitHub Releases <https://github.com/Cog-Creators/Red-DiscordBot/releases/new>`__.
 
    .. attention::
 
