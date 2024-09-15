@@ -45,13 +45,13 @@ syncenv:
 ensurevenv: ;
 
 bumpdeps: ensurevenv
-	echo.- Upgrading requirement files
+	@echo "- Upgrading requirement files"
 	./.venv/bin/pip-compile --quiet --upgrade
 	./.venv/bin/pip-compile --quiet --upgrade dev-requirements.in
 	$(MAKE) aftercompiledeps
 
 compiledeps: ensurevenv
-	echo.- Compiling requirement files
+	@echo "- Compiling requirement files"
 	./.venv/bin/pip-compile --quiet
 	./.venv/bin/pip-compile --quiet dev-requirements.in
 	$(MAKE) aftercompiledeps
