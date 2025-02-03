@@ -10,5 +10,6 @@ python:
     - requirements: requirements.txt
 
 sphinx:
+  configuration: source/conf.py
   builder: dirhtml
   fail_on_warning: true
