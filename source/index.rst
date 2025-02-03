@@ -11,3 +11,4 @@ Full Table of Contents
    :maxdepth: 3
 
    core-devs/index
+   dependency-changes
